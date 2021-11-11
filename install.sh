@@ -34,8 +34,7 @@ main() {
 
     printf "The bin directory will then be added to your PATH environment\n"
     printf "variable by modifying the the profile files located at:\n\n"
-    for profile in $profiles
-    do
+    for profile in $profiles; do
         printf "    $HOME/$profile\n"
     done
     printf "\n"
@@ -48,8 +47,7 @@ main() {
     printf ">   "
     read -r REPLY
     printf "\n\n"
-    if ! (echo "$REPLY" | grep -q "y\|Y")
-    then
+    if ! (echo "$REPLY" | grep -q "y\|Y"); then
         printf "Installation aborted.\n\n"
         return 1
     fi
@@ -74,15 +72,14 @@ main() {
 
     printf "Updating PATH:\n\n"
 
-    for profile in $profiles
-    do
+    for profile in $profiles; do
         added=$(grep "$ASPEN_BIN" "$HOME/$profile")
         if [ ! -z "$added" ]; then
             printf "    \$ASPEN_BIN is already exported in $profile.\n"
         else
             printf "    Updating $profile... "
-            printf "\n# Automatically added by Aspen\n" >> "$HOME/$profile"
-            printf "export PATH=\"$ASPEN_BIN:\$PATH\"\n\n" >> "$HOME/$profile"
+            printf "\n# Automatically added by Aspen\n" >>"$HOME/$profile"
+            printf "export PATH=\"$ASPEN_BIN:\$PATH\"\n\n" >>"$HOME/$profile"
             printf "Done!\n"
         fi
     done
@@ -106,7 +103,7 @@ main() {
 }
 
 check_cmd() {
-    command -v "$1" > /dev/null 2>&1
+    command -v "$1" >/dev/null 2>&1
 }
 
 need_cmd() {
